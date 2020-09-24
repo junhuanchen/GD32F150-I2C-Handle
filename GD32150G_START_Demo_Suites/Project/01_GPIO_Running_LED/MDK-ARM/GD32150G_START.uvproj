@@ -56,7 +56,7 @@
           <ListingPath>.\list\</ListingPath>
           <HexFormatSelection>1</HexFormatSelection>
           <Merge32K>0</Merge32K>
-          <CreateBatchFile>1</CreateBatchFile>
+          <CreateBatchFile>0</CreateBatchFile>
           <BeforeCompile>
             <RunUserProg1>0</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
@@ -352,8 +352,8 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>0</Optim>
-            <oTime>0</oTime>
+            <Optim>2</Optim>
+            <oTime>1</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
             <Strict>0</Strict>
@@ -436,6 +436,11 @@
               <FileName>systick.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\systick.c</FilePath>
+            </File>
+            <File>
+              <FileName>gd32f1x0_eval.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\Utilities\gd32f1x0_eval.c</FilePath>
             </File>
           </Files>
         </Group>
