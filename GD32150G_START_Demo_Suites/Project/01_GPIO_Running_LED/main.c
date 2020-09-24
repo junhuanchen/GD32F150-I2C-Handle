@@ -130,8 +130,6 @@ int main(void)
             // uint8_t tmp = i2c_data_receive(BOARD_I2C);
 
             // allow recv data
-
-            gd_eval_led_toggle(LED1);
         }
         /* wait until the transmission data register is empty */
         if (i2c_flag_get(BOARD_I2C, I2C_FLAG_TBE))
@@ -151,6 +149,7 @@ int main(void)
         {
             /* clear the STPDET bit */
             i2c_enable(BOARD_I2C);
+            gd_eval_led_toggle(LED1);
         }
     }
 }
