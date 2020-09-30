@@ -86,6 +86,7 @@ int main(void)
     i2c_config();
 
     gd_eval_led_init(LED1);
+    gd_eval_led_on(LED1);
 
     i2c_key_init(RCU_GPIOA, GPIOA, GPIO_PIN_0);
     i2c_key_init(RCU_GPIOA, GPIOA, GPIO_PIN_2);
@@ -107,9 +108,9 @@ int main(void)
             i2c_key_state |= KEY_R, i2c_key_state <<= 1;
             i2c_key_state |= KEY_L, i2c_key_state <<= 1;
             i2c_key_state |= KEY_D, i2c_key_state <<= 1;
-            i2c_key_state |= 1, i2c_key_state <<= 1; // KEY_U
-            i2c_key_state |= 1, i2c_key_state <<= 1; // KEY_T
-            i2c_key_state |= 1, i2c_key_state <<= 1; // KEY_E
+            i2c_key_state |= KEY_U, i2c_key_state <<= 1; // KEY_U
+            i2c_key_state |= KEY_T, i2c_key_state <<= 1; // KEY_T
+            i2c_key_state |= KEY_E, i2c_key_state <<= 1; // KEY_E
             i2c_key_state |= KEY_A, i2c_key_state <<= 1;
             i2c_key_state |= KEY_B;
             // if (i2c_key_state == UINT8_MAX) {
