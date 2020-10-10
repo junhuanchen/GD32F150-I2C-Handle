@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"path": "GD32150G_START_Demo_Suites\\Project\\01_GPIO_Running_LED\\MDK-ARM"
+		},
+		{
+			"path": "."
+		}
+	],
+	"settings": {}
+}

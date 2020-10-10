@@ -27,7 +27,7 @@
 #define I2C_RCC RCU_I2C1
 #endif
 
-#define I2C_OWN_ADDRESS7 0x84
+static int I2C_OWN_ADDRESS7 = 0x84;
 
 // #define KEY_U // PA0
 // #define KEY_D // PA2
@@ -39,6 +39,8 @@
 // #define KEY_X // PA10
 // #define KEY_START // PA4
 // #define KEY_SELECT // PA5
+
+#define ADDR gpio_input_bit_get(GPIOB, GPIO_PIN_1)
 
 #define KEY_U gpio_input_bit_get(GPIOA, GPIO_PIN_0)
 #define KEY_D gpio_input_bit_get(GPIOA, GPIO_PIN_2)
@@ -82,11 +84,20 @@ int main(void)
     rcu_config();
     /* GPIO config */
     gpio_config();
-    /* I2C config */
-    i2c_config();
 
     gd_eval_led_init(LED1);
     gd_eval_led_on(LED1);
+    gd_eval_led_toggle(LED1);
+
+    i2c_key_init(RCU_GPIOB, GPIOB, GPIO_PIN_1);
+    if (ADDR) 
+    {
+        I2C_OWN_ADDRESS7 = 0x94;
+    }
+
+    /* I2C config */
+    i2c_config();
+
 
     i2c_key_init(RCU_GPIOA, GPIOA, GPIO_PIN_0);
     i2c_key_init(RCU_GPIOA, GPIOA, GPIO_PIN_2);
@@ -98,19 +109,20 @@ int main(void)
     i2c_key_init(RCU_GPIOA, GPIOA, GPIO_PIN_10);
     i2c_key_init(RCU_GPIOA, GPIOA, GPIO_PIN_4);
     i2c_key_init(RCU_GPIOA, GPIOA, GPIO_PIN_5);
-
+    
     while (1)
     {
         // i2c_key_state = (KEY_U) | (KEY_D << 1) | (KEY_L << 2) | (KEY_R << 3) | (KEY_A << 4) | (KEY_B << 5) | (KEY_Y << 6) | (KEY_X << 7) | (KEY_T << 8) | (KEY_E << 9);
-        if (!count++) {
+        if (!count++)
+        {
             // backup = i2c_key_state;
             i2c_key_state = 0;
             i2c_key_state |= KEY_R, i2c_key_state <<= 1;
             i2c_key_state |= KEY_L, i2c_key_state <<= 1;
             i2c_key_state |= KEY_D, i2c_key_state <<= 1;
             i2c_key_state |= KEY_U, i2c_key_state <<= 1; // KEY_U
-            i2c_key_state |= KEY_T, i2c_key_state <<= 1; // KEY_T
-            i2c_key_state |= KEY_E, i2c_key_state <<= 1; // KEY_E
+            i2c_key_state |= KEY_E, i2c_key_state <<= 1; // KEY_T
+            i2c_key_state |= KEY_T, i2c_key_state <<= 1; // KEY_E
             i2c_key_state |= KEY_A, i2c_key_state <<= 1;
             i2c_key_state |= KEY_B;
             // if (i2c_key_state == UINT8_MAX) {
