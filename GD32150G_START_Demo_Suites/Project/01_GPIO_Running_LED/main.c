@@ -53,7 +53,7 @@ static int I2C_OWN_ADDRESS7 = 0x84;
 #define KEY_T gpio_input_bit_get(GPIOA, GPIO_PIN_4)
 #define KEY_E gpio_input_bit_get(GPIOA, GPIO_PIN_5)
 
-uint8_t i2c_key_state = 0;
+uint8_t i2c_key_state = 0, i2c_key_extern = 0;
 
 void rcu_config(void);
 void gpio_config(void);
@@ -128,6 +128,9 @@ int main(void)
             // if (i2c_key_state == UINT8_MAX) {
             //     i2c_key_state = backup;
             // }
+            i2c_key_extern = (KEY_X << 1) | KEY_Y;
+            // i2c_key_extern |= KEY_X, i2c_key_extern <<= 1;
+            // i2c_key_extern |= KEY_Y;
         }
 
         /* wait until ADDSEND bit is set */
@@ -150,6 +153,7 @@ int main(void)
             /* send a data byte */
             // i2c_data_transmit(BOARD_I2C, ~(uint8_t)(i2c_key_state >> 8));
             i2c_data_transmit(BOARD_I2C, ~i2c_key_state);
+            i2c_data_transmit(BOARD_I2C, ~i2c_key_extern);
         }
         /* the master doesn't acknowledge for the last byte */
         if (i2c_flag_get(BOARD_I2C, I2C_FLAG_AERR))
